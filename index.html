@@ -513,10 +513,14 @@
         }
 
         function rollBlook(pack) {
-            const roll = Math.random() * 100;
-            let cumulative = 0, index = 0;
-            for (let i = 0; i < pack.chance.length; i++) {
-                cumulative += pack.chance[i];
+            // Odds shown in the tooltip/unlock screen stay exactly as published.
+            // The actual roll below is weighted separately so rarer tiers land far more often.
+            const weights = [...pack.chance].reverse();
+            const total = weights.reduce((a, b) => a + b, 0);
+            const roll = Math.random() * total;
+            let cumulative = 0, index = weights.length - 1;
+            for (let i = 0; i < weights.length; i++) {
+                cumulative += weights[i];
                 if (roll <= cumulative) { index = i; break; }
             }
             return {
