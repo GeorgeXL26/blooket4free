@@ -271,6 +271,27 @@ const packData = [{
     comingSoon: false,
 
     tileBackground: "./assets/blooktiles/breakfast.svg",
+}, {
+    name: "Kanto Pack",
+    id: "kanto",
+    bg: "radial-gradient(circle, rgb(255, 92, 92) 0%, rgb(40, 30, 30) 100%)",
+    blook: ["Rattata", "Pidgey", "Caterpie", "Weedle", "Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Gyarados", "Mewtwo", "Mew"],
+    chance: [18.75, 18.75, 18.75, 18.75, 7, 7, 7, 3.31, 0.65, 0.03, 0.01],
+    svg: ["https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/19.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png"],
+    png: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png",
+    rarity: ["Uncommon", "Uncommon", "Uncommon", "Uncommon", "Rare", "Rare", "Rare", "Epic", "Legendary", "Chroma", "Chroma"],
+
+    colorBlook: [],
+    colorSvg: [],
+    colorRarity: [],
+
+    packBottom: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png",
+    cornerIcon: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png",
+    blookBackground: "https://ac.blooket.com/dashclassic/assets/Highlighted_Background_Generic-BG3_DSfA.svg",
+
+    comingSoon: false,
+
+    tileBackground: "",
 }, /* {
     name: "Debug Pack",
     id: "debug",

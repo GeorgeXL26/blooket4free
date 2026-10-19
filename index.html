@@ -229,6 +229,67 @@
             transform: scale(0.95);
         }
 
+        .coinBadge {
+            position: fixed;
+            top: 35px;
+            right: 25px;
+            z-index: 1003;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            font-family: 'Titan One', cursive;
+            font-size: 18px;
+            color: #ffd24d;
+            text-shadow: 2px 2px var(--gray-shadow);
+            filter: drop-shadow(4px 4px var(--gray-shadow));
+        }
+
+        .packCost {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 24px;
+            padding: 0 12px;
+            background-color: #0003;
+            font-family: Titan One, sans-serif;
+            font-size: 16px;
+            color: #ffd24d;
+            text-shadow: 1px 1px 0 grey;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            position: absolute;
+            bottom: 12px;
+            right: 0;
+        }
+
+        .packCost.free {
+            color: #7fd99a;
+        }
+
+        @keyframes cantAfford {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) rotate(10deg);
+            }
+
+            25% {
+                transform: translate(calc(-50% - 6px), -50%) rotate(10deg);
+            }
+
+            75% {
+                transform: translate(calc(-50% + 6px), -50%) rotate(10deg);
+            }
+        }
+
+        .pack.cantAfford .pngContainer {
+            animation: cantAfford 0.35s ease;
+        }
+
         #closeSidebar {
             position: absolute;
             top: 10px;
@@ -425,6 +486,20 @@
                     <span class="Sidebar_text__TwkTk">Pack Maker</span>
                 </a>
             </li>
+
+            <li>
+                <a class="Sidebar_link__pbkfx" href="./snake.html">
+                    <span class="Sidebar_listIcon__rg5X6">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 640 512" class="svg-inline--fa fa-dragon fa-w-20">
+                            <path fill="currentColor"
+                                d="M38.49 191.1C45.69 170.4 65.98 160 86.09 160c4.969 0 9.828 .6406 14.52 1.891C118.5 149.3 141.3 141.7 165.7 141.7c15.02 0 29.3 2.859 42.52 7.938C223.3 118.3 255.9 96 293.4 96c13.7 0 26.69 3.078 38.52 8.484C348.4 81.2 373.7 64 403.2 64c48.52 0 87.98 39.45 87.98 88c0 2.469-.2656 4.859-.4531 7.266C520.2 164.5 544 193.4 544 228.6c0 2.109-.1875 4.156-.3281 6.219C563.7 243.7 576 263.3 576 285.7c0 32.69-26.59 59.27-59.27 59.27h-18.02C488.8 371.3 464 400 464 435.3V448c0 35.35-28.65 64-64 64h-32c-17.67 0-32-14.33-32-32s14.33-32 32-32h32v-12.7c0-19.33-11.03-36.83-28.39-45.25C382.6 408.3 362.9 384 336 384c-12.08 0-23.17 4.016-32.19 10.73C290.3 376.9 268.9 365.1 245.3 365.1c-13.44 0-26 3.828-36.67 10.44C193.8 358.4 171.6 346.1 146.7 346.1c-5.016 0-9.891 .6406-14.59 1.766C117 329.3 94.11 317.1 68.09 317.1c-37.56 0-68.09 30.53-68.09 68.09c0 11.66 3.078 22.5 8.219 32.16C3.047 429.9 0 442.5 0 455.9C0 486.8 25.19 512 56.09 512h103.8c17.67 0 32-14.33 32-32s-14.33-32-32-32H56.09c.2813-.4844 .7656-1.047 1.172-1.609C68.56 440.5 86.63 432 105.1 432c5.828 0 11.44 .9375 16.73 2.625C135.5 441.2 150.9 445.3 167.2 445.3c5.922 0 11.66-.8906 17.2-2.344C198.5 450.3 215.2 455.3 232.9 455.3c6.656 0 13.08-1.047 19.2-2.844c17 10.95 37.11 17.56 58.84 17.56c3.016 0 5.953-.4844 8.906-.7813C332.8 476.5 350.3 480 368.9 480H464c53.02 0 96-42.98 96-96v-21.19C607.6 346.1 640 309.8 640 265.5c0-11.8-2.344-23.03-6.516-33.28C636.4 221.6 640 209.6 640 196.6c0-45.08-36.52-81.59-81.59-81.59c-2.969 0-5.828 .3281-8.703 .6406C529.3 65.98 476.2 16 411.4 16c-15.84 0-30.84 3.047-44.73 8.422C349.5 9.172 327.1 0 302.7 0c-28.72 0-54.56 12.23-72.83 31.69C212.9 20.8 192.7 14.33 171.1 14.33c-37.84 0-70.64 21.33-87.33 52.59C71.05 62.39 57.28 59.7 42.91 59.7C19.22 59.7 0 78.92 0 102.6C0 109.2 1.5 115.4 4.062 121.1C1.469 128.3 0 136.1 0 144.1C0 164.5 7.812 182.9 20.52 196.6C12.7 206 7.141 217.2 4.75 229.5C1.75 227.9 0 227 0 227z">
+                            </path>
+                        </svg>
+                    </span>
+                    <span class="Sidebar_text__TwkTk">Snake</span>
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -433,6 +508,8 @@
     <button id="hamburgerBtn" class="hamburger">
         <img src="./assets/misc_images/borgor.svg" alt="Menu">
     </button>
+
+    <div id="coinBadge" class="coinBadge">🪙 <span id="coinAmount">0</span> Blook Coins</div>
 
     <div class="_background_l90pt_1" style="background:linear-gradient(#0bc2cf,#349aef)">
         <div class="_checkers_l90pt_12" style="background-size:1000px"></div>
@@ -483,6 +560,7 @@
         </div>
     </div>
 
+    <script src="./assets/js/coins.js"></script>
     <script src="./assets/js/packdata.js"></script>
     <script src="./assets/js/seasonalpackdata.js"></script>
     <script src="./assets/js/freepackdata.js"></script>
@@ -728,7 +806,8 @@
 
         function renderPacks() {
 
-            let allPacks = packData.concat(seasonalPackData).concat(freePackData);
+            let allPacks = packData.concat(seasonalPackData)
+                .concat(freePackData.map(p => Object.assign({}, p, { _isFree: true })));
 
             allPacks = processPacks(allPacks);
 
@@ -764,6 +843,17 @@
                     newPack.appendChild(packBottomDiv);
                 }
 
+                const cost = getPackCost(allPacks[i], allPacks[i]._isFree);
+                const costDiv = document.createElement("div");
+                costDiv.classList.add("packCost");
+                if (cost === 0) {
+                    costDiv.classList.add("free");
+                    costDiv.innerText = "FREE";
+                } else {
+                    costDiv.innerText = `🪙 ${cost}`;
+                }
+                newPack.appendChild(costDiv);
+
                 const tooltip = document.createElement("div");
                 tooltip.classList.add("tooltip");
 
@@ -780,7 +870,10 @@
                     newPack.appendChild(lock);
 
                 } else {
-                    let tooltipHtml = "<strong>Pack Rates:</strong><br>";
+                    let tooltipHtml = cost === 0
+                        ? "<strong>Cost: Free</strong><br>"
+                        : `<strong>Cost: ${cost} Blook Coins</strong><br>`;
+                    tooltipHtml += "<strong>Pack Rates:</strong><br>";
                     for (let j = 0; j < allPacks[i].blook.length; j++) {
                         let displayName = allPacks[i].blook[j].replace(/_custom$/, "");
                         tooltipHtml += `${displayName}: ${allPacks[i].chance[j]}%<br>`;
@@ -788,6 +881,12 @@
                     tooltip.innerHTML = tooltipHtml;
 
                     newPack.addEventListener("click", function () {
+                        if (!spendCoins(cost)) {
+                            newPack.classList.remove("cantAfford");
+                            void newPack.offsetWidth;
+                            newPack.classList.add("cantAfford");
+                            return;
+                        }
                         const result = rollBlook(allPacks[i]);
                         document.getElementById("packContainer").style.visibility = "hidden";
                         showUnlock(result, allPacks[i]);
@@ -1001,7 +1100,8 @@
         }
 
         async function getAllPacks() {
-            let allPacks = packData.concat(seasonalPackData).concat(freePackData);
+            let allPacks = packData.concat(seasonalPackData)
+                .concat(freePackData.map(p => Object.assign({}, p, { _isFree: true })));
             const customPacks = await loadCustomPacks();
             return allPacks.concat(customPacks);
         }
@@ -1106,6 +1206,17 @@
                     newPack.appendChild(packBottomDiv);
                 }
 
+                const cost = getPackCost(allPacks[i], allPacks[i]._isFree);
+                const costDiv = document.createElement("div");
+                costDiv.classList.add("packCost");
+                if (cost === 0) {
+                    costDiv.classList.add("free");
+                    costDiv.innerText = "FREE";
+                } else {
+                    costDiv.innerText = `🪙 ${cost}`;
+                }
+                newPack.appendChild(costDiv);
+
                 if (i >= defaultPacksCount) {
                     const customPackIndex = i - defaultPacksCount;
 
@@ -1150,7 +1261,10 @@
                     newPack.appendChild(lock);
 
                 } else {
-                    let tooltipHtml = "<strong>Pack Rates:</strong><br>";
+                    let tooltipHtml = cost === 0
+                        ? "<strong>Cost: Free</strong><br>"
+                        : `<strong>Cost: ${cost} Blook Coins</strong><br>`;
+                    tooltipHtml += "<strong>Pack Rates:</strong><br>";
                     for (let j = 0; j < allPacks[i].blook.length; j++) {
                         let displayName = allPacks[i].blook[j].replace(/_custom$/, "");
                         tooltipHtml += `${displayName}: ${allPacks[i].chance[j]}%<br>`;
@@ -1158,6 +1272,12 @@
                     tooltip.innerHTML = tooltipHtml;
 
                     newPack.addEventListener("click", function () {
+                        if (!spendCoins(cost)) {
+                            newPack.classList.remove("cantAfford");
+                            void newPack.offsetWidth;
+                            newPack.classList.add("cantAfford");
+                            return;
+                        }
                         const result = rollBlook(allPacks[i]);
                         document.getElementById("packContainer").style.visibility = "hidden";
                         showUnlock(result, allPacks[i]);
@@ -1191,6 +1311,14 @@
         $(document).ready(async function () {
             await renderPacksAsync();
         });
+    </script>
+
+    <script>
+        function updateCoinBadge(coins) {
+            document.getElementById("coinAmount").innerText = (coins ?? getCoins()).toLocaleString();
+        }
+        updateCoinBadge();
+        onCoinsChanged(updateCoinBadge);
     </script>
 
 </body>
