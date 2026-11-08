@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooket4Free | Games</title>
+    <link rel="icon" type="image/x-icon" href="./assets/misc_images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700|Titan+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/games.css">
+</head>
+
+<body>
+
+    <nav id="sidebar" class="Sidebar_sidebar__J7H_G"></nav>
+    <div id="overlay"></div>
+    <button id="hamburgerBtn" class="hamburger">
+        <img src="./assets/misc_images/borgor.svg" alt="Menu">
+    </button>
+    <div id="coinBadge" class="coinBadge">🪙 <span id="coinAmount">0</span> Blook Coins</div>
+
+    <main class="page">
+        <h1 class="title">Game Modes</h1>
+        <p class="subtitle">Play to earn <b>Blook Coins</b> — then spend them on packs in the Market.</p>
+
+        <div class="gameGrid">
+            <section class="gameCard gameCard--monster">
+                <div class="cardArt" id="artMonster"></div>
+                <h3>Monster Brawl</h3>
+                <p>Brawl through endless waves of monsters. Land crits, heal smart, and every knockout pays out.</p>
+                <div class="cardFoot">
+                    <span class="bestBadge" id="bestMonster">Best: wave 0</span>
+                    <a class="gb gb--red" href="./monsterbrawl.html">Play</a>
+                </div>
+            </section>
+
+            <section class="gameCard gameCard--td">
+                <div class="cardArt" id="artTD"></div>
+                <h3>Tower Defense 2</h3>
+                <p>Build blook towers along the path, upgrade them, and stop every wave before it leaks through.</p>
+                <div class="cardFoot">
+                    <span class="bestBadge" id="bestTD">Best: wave 0</span>
+                    <a class="gb gb--green" href="./towerdefense.html">Play</a>
+                </div>
+            </section>
+
+            <section class="gameCard gameCard--gold">
+                <div class="cardArt" id="artGold"></div>
+                <h3>Gold Quest</h3>
+                <p>Crack open chests, dodge cursed loot, and out-earn your rival in ten rounds of pure gambling.</p>
+                <div class="cardFoot">
+                    <span class="bestBadge" id="bestGold">Best: 0 gold</span>
+                    <a class="gb gb--gold" href="./goldquest.html">Play</a>
+                </div>
+            </section>
+
+            <section class="gameCard gameCard--snake">
+                <div class="cardArt"><span class="emojiArt">🐍</span></div>
+                <h3>Coin Snake</h3>
+                <p>The original coin-grinder. Eat pellets, grow long, and cash out 20 Blook Coins per bite.</p>
+                <div class="cardFoot">
+                    <span class="bestBadge" id="bestSnake">Best: 0 coins</span>
+                    <a class="gb" href="./snake.html">Play</a>
+                </div>
+            </section>
+        </div>
+
+        <p class="footNote">All four modes save your best run on this device and pay straight into your Blook Coin
+            balance.</p>
+    </main>
+
+    <script src="./assets/js/coins.js"></script>
+    <script src="./assets/js/games/sprites.js"></script>
+    <script src="./assets/js/games/nav.js"></script>
+    <script>
+        renderSidebar("games");
+
+        document.getElementById("artMonster").innerHTML = blookImg("angrybot", 92) + blookImg("crocodile", 66);
+        document.getElementById("artTD").innerHTML = blookImg("buddybot", 92) + blookImg("bee", 66);
+        document.getElementById("artGold").innerHTML = '<span class="emojiArt">💰</span><span class="emojiArt">🎁</span>';
+
+        const best = (key) => {
+            const n = parseInt(localStorage.getItem(key), 10);
+            return Number.isFinite(n) && n > 0 ? n : 0;
+        };
+
+        document.getElementById("bestMonster").innerText = `Best: wave ${best("monsterBrawlBestWave")}`;
+        document.getElementById("bestTD").innerText = `Best: wave ${best("td2BestWave")}`;
+        document.getElementById("bestGold").innerText = `Best: ${best("goldQuestBestGold").toLocaleString()} gold`;
+        document.getElementById("bestSnake").innerText = `Best: ${best("snakeBestCoins")} coins`;
+    </script>
+</body>
+
+</html>

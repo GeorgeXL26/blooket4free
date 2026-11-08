@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooket4Free | Gold Quest</title>
+    <link rel="icon" type="image/x-icon" href="./assets/misc_images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700|Titan+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/games.css">
+    <style>
+        .questStage {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 24px 20px 26px;
+            background: radial-gradient(circle at 50% 0%, #3a2a12, #1a1408 75%);
+        }
+
+        .questPrompt {
+            text-align: center;
+            font-family: 'Titan One', cursive;
+            font-size: 22px;
+            margin: 0 0 6px;
+            color: #fff;
+            text-shadow: 2px 2px var(--gray-shadow);
+        }
+
+        .questSub {
+            text-align: center;
+            font-size: 14px;
+            color: #e6d9bd;
+            margin: 0;
+        }
+
+        .chestRow {
+            display: flex;
+            gap: 22px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 22px 0 10px;
+        }
+
+        .chest {
+            position: relative;
+            width: 132px;
+            height: 132px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(180deg, #ffd264, #c9820f);
+            box-shadow: inset 0 -9px rgba(0, 0, 0, 0.28), 6px 6px var(--gray-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 54px;
+            transition: transform 0.15s ease, filter 0.2s ease, opacity 0.2s ease;
+            line-height: 1;
+        }
+
+        .chest:hover:not(:disabled) {
+            transform: translateY(-9px) rotate(-2deg);
+            filter: brightness(1.06);
+        }
+
+        .chest:active:not(:disabled) {
+            transform: translateY(-2px) scale(0.97);
+        }
+
+        .chest:disabled {
+            cursor: default;
+        }
+
+        .chest.chosen {
+            animation: chestPop 0.55s ease;
+        }
+
+        .chest.dim {
+            opacity: 0.32;
+            filter: grayscale(0.7);
+            transform: scale(0.92);
+        }
+
+        .chest .num {
+            position: absolute;
+            top: 9px;
+            left: 12px;
+            font-family: 'Titan One', cursive;
+            font-size: 13px;
+            color: #5c3a02;
+        }
+
+        .chest .glow {
+            position: absolute;
+            inset: -6px;
+            border-radius: 24px;
+            box-shadow: 0 0 0 0 rgba(255, 210, 77, 0);
+            pointer-events: none;
+        }
+
+        @keyframes chestPop {
+            0% {
+                transform: scale(1);
+            }
+
+            35% {
+                transform: scale(1.16) rotate(5deg);
+            }
+
+            65% {
+                transform: scale(1.05) rotate(-3deg);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .questResult {
+            min-height: 54px;
+            text-align: center;
+            font-family: 'Titan One', cursive;
+            font-size: 20px;
+            line-height: 1.5;
+            color: #fff;
+            text-shadow: 2px 2px var(--gray-shadow);
+        }
+
+        .questResult .small {
+            display: block;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            color: #e2d4b7;
+            text-shadow: none;
+            margin-top: 4px;
+        }
+
+        .good {
+            color: #6bf58a;
+        }
+
+        .bad {
+            color: #ff8d7a;
+        }
+
+        .neutral {
+            color: #ffd24d;
+        }
+
+        .questLog {
+            list-style: none;
+            max-width: 780px;
+            margin: 18px auto 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .questLog li {
+            background: rgba(0, 0, 0, 0.26);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 13.5px;
+            color: #f0e7d6;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .questLog li span.r {
+            font-family: 'Titan One', cursive;
+            font-size: 12.5px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="sidebar" class="Sidebar_sidebar__J7H_G"></nav>
+    <div id="overlay"></div>
+    <button id="hamburgerBtn" class="hamburger">
+        <img src="./assets/misc_images/borgor.svg" alt="Menu">
+    </button>
+    <div id="coinBadge" class="coinBadge">🪙 <span id="coinAmount">0</span> Blook Coins</div>
+
+    <main class="page">
+        <a class="backLink" href="./games.html">← All games</a>
+        <h1 class="title">Gold Quest</h1>
+        <p class="subtitle">Ten rounds, three chests, one very smug rival. Finish with the biggest pile.</p>
+
+        <div class="hud">
+            <div class="hudItem">Round <b id="hudRound">1 / 10</b></div>
+            <div class="hudItem">Your gold <b id="hudGold">0</b></div>
+            <div class="hudItem">Rival <b id="hudRival">40</b></div>
+            <div class="hudItem">Shields <b id="hudShield">0</b></div>
+        </div>
+
+        <section class="questStage panel">
+            <p class="questPrompt" id="prompt">Pick a chest!</p>
+            <p class="questSub" id="questSub">Chests can hold gold, shields… or your rival's grubby hands.</p>
+
+            <div class="chestRow" id="chestRow">
+                <button class="chest" data-i="0"><span class="num">1</span>🎁</button>
+                <button class="chest" data-i="1"><span class="num">2</span>🎁</button>
+                <button class="chest" data-i="2"><span class="num">3</span>🎁</button>
+            </div>
+
+            <p class="questResult" id="result">&nbsp;</p>
+        </section>
+
+        <ul class="questLog" id="log"></ul>
+    </main>
+
+    <div class="overlayCard" id="overCard">
+        <div class="overlayBox">
+            <h2 id="overTitle">Quest Complete</h2>
+            <p>Your gold: <span class="earned" id="overGold">0</span></p>
+            <p>Rival's gold: <span id="overRival">0</span></p>
+            <p id="overRank"></p>
+            <p>Blook Coins earned: <span class="earned" id="overCoins">0</span></p>
+            <div class="row">
+                <button class="gb gb--gold" id="againBtn">Quest Again</button>
+                <a class="gb gb--ghost" href="./games.html">All games</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/coins.js"></script>
+    <script src="./assets/js/games/sprites.js"></script>
+    <script src="./assets/js/games/nav.js"></script>
+    <script src="./assets/js/games/goldquest.js"></script>
+</body>
+
+</html>

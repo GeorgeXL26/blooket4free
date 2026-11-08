@@ -258,7 +258,7 @@
       </li>
 
       <li>
-        <a class="Sidebar_link__pbkfx" href="./snake.html">
+        <a class="Sidebar_link__pbkfx" href="./games.html">
           <span class="Sidebar_listIcon__rg5X6">
             <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
               class="svg-inline--fa fa-dragon fa-w-20">
@@ -267,7 +267,7 @@
               </path>
             </svg>
           </span>
-          <span class="Sidebar_text__TwkTk">Snake</span>
+          <span class="Sidebar_text__TwkTk">Games</span>
         </a>
       </li>
     </ul>
@@ -548,7 +548,7 @@
           packDiv.className = 'BlooksPacks_pack___MJtt';
 
           let bg = pack.tileBackground || pack.bg || '';
-          if (bg && !String(bg).trim().startsWith('linear-gradient')) bg = `url('${esc(bg)}')`;
+          if (bg && !String(bg).trim().includes('gradient')) bg = `url('${esc(bg)}')`;
 
           const packTitle = pack.name || pack.title || '';
 
