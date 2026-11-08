@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooket4Free | Tower Defense 2</title>
+    <link rel="icon" type="image/x-icon" href="./assets/misc_images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700|Titan+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/games.css">
+    <style>
+        .tdWrap {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .tdStage {
+            position: relative;
+            flex: 1 1 620px;
+            max-width: 960px;
+            min-width: 320px;
+        }
+
+        #td {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            background: #1d6b45;
+            box-shadow: inset 0 -6px rgba(0, 0, 0, 0.25), 6px 6px var(--gray-shadow);
+            cursor: crosshair;
+            touch-action: manipulation;
+        }
+
+        .tdPanel {
+            width: 296px;
+            flex: 0 0 296px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .statGrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .statGrid>div {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .statGrid span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #a9c6de;
+        }
+
+        .statGrid b {
+            font-family: 'Titan One', cursive;
+            font-size: 19px;
+            color: #fff;
+        }
+
+        .statGrid b.gold {
+            color: var(--gold);
+        }
+
+        .statGrid b.danger {
+            color: #ff7b68;
+        }
+
+        .shopTitle {
+            font-family: 'Titan One', cursive;
+            font-size: 15px;
+            color: #cfe6f7;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .shopItem {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.26);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 8px 10px;
+            cursor: pointer;
+            color: #fff;
+            text-align: left;
+            font-family: 'Nunito', sans-serif;
+            transition: border-color 0.15s ease, background 0.15s ease;
+        }
+
+        .shopItem:hover {
+            background: rgba(0, 0, 0, 0.38);
+        }
+
+        .shopItem.active {
+            border-color: var(--gold);
+            background: rgba(255, 210, 77, 0.14);
+        }
+
+        .shopItem.poor {
+            opacity: 0.5;
+        }
+
+        .shopItem .ico {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            flex: 0 0 42px;
+        }
+
+        .shopItem .ico img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+
+        .shopItem .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .shopItem .nm {
+            font-family: 'Titan One', cursive;
+            font-size: 13.5px;
+            display: block;
+        }
+
+        .shopItem .blurb {
+            font-size: 11.5px;
+            color: #b9d3e8;
+            display: block;
+            line-height: 1.3;
+        }
+
+        .shopItem .cost {
+            font-family: 'Titan One', cursive;
+            font-size: 12.5px;
+            color: var(--gold);
+            white-space: nowrap;
+        }
+
+        .panelActions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .panelActions .gb {
+            flex: 1;
+            font-size: 14px;
+            padding: 11px 10px;
+        }
+
+        .towerInfo {
+            font-size: 13px;
+            line-height: 1.45;
+            color: #d6e8f6;
+            background: rgba(0, 0, 0, 0.24);
+            border-radius: 12px;
+            padding: 10px 12px;
+            min-height: 76px;
+        }
+
+        .towerInfo .tName {
+            font-family: 'Titan One', cursive;
+            font-size: 14.5px;
+            color: #fff;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .towerInfo .acts {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .towerInfo .acts .gb {
+            flex: 1;
+            font-size: 12.5px;
+            padding: 8px 6px;
+        }
+
+        .waveBanner {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Titan One', cursive;
+            font-size: clamp(20px, 3.4vw, 34px);
+            color: var(--gold);
+            text-shadow: 3px 3px var(--gray-shadow);
+            pointer-events: none;
+            opacity: 0;
+            white-space: nowrap;
+        }
+
+        .waveBanner.show {
+            animation: tdBanner 1.3s ease forwards;
+        }
+
+        @keyframes tdBanner {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 12px) scale(0.85);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate(-50%, 0) scale(1.04);
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -10px) scale(1);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .tdPanel {
+                width: 100%;
+                flex: 1 1 100%;
+                max-width: 640px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="sidebar" class="Sidebar_sidebar__J7H_G"></nav>
+    <div id="overlay"></div>
+    <button id="hamburgerBtn" class="hamburger">
+        <img src="./assets/misc_images/borgor.svg" alt="Menu">
+    </button>
+    <div id="coinBadge" class="coinBadge">🪙 <span id="coinAmount">0</span> Blook Coins</div>
+
+    <main class="page">
+        <a class="backLink" href="./games.html">← All games</a>
+        <h1 class="title">Tower Defense 2</h1>
+        <p class="subtitle">Build blook towers, survive 20 waves, earn <b>Blook Coins</b> for every wave cleared.</p>
+
+        <div class="tdWrap">
+            <div class="tdStage">
+                <canvas id="td" width="960" height="576"></canvas>
+                <div class="waveBanner" id="tdBanner">Wave 1</div>
+            </div>
+
+            <aside class="tdPanel">
+                <div class="statGrid">
+                    <div><span>Gold</span><b class="gold" id="stGold">150</b></div>
+                    <div><span>Lives</span><b id="stLives">20</b></div>
+                    <div><span>Wave</span><b id="stWave">0</b></div>
+                    <div><span>Coins</span><b class="gold" id="stCoins">0</b></div>
+                </div>
+
+                <div class="shopTitle">Towers</div>
+                <div id="shop"></div>
+
+                <div class="panelActions">
+                    <button class="gb gb--green" id="startWaveBtn">Start Wave</button>
+                    <button class="gb gb--ghost" id="speedBtn">1×</button>
+                    <button class="gb gb--ghost" id="pauseBtn">Pause</button>
+                </div>
+
+                <div class="towerInfo" id="towerInfo">Pick a tower, then click the grass to build.</div>
+            </aside>
+        </div>
+
+        <p class="hint">Click a tower then a grass tile to build · click a tower to upgrade or sell · keys <b>1-3</b>
+            build, <b>Space</b> starts a wave, <b>P</b> pauses.</p>
+    </main>
+
+    <div class="overlayCard" id="overCard">
+        <div class="overlayBox">
+            <h2 id="overTitle">Tower Down!</h2>
+            <p>Waves cleared: <span class="earned" id="overWaves">0</span></p>
+            <p>Blooks popped: <span id="overKills">0</span></p>
+            <p>Blook Coins earned: <span class="earned" id="overCoins">0</span></p>
+            <div class="row">
+                <button class="gb gb--green" id="againBtn">Defend Again</button>
+                <a class="gb gb--ghost" href="./games.html">All games</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/coins.js"></script>
+    <script src="./assets/js/games/sprites.js"></script>
+    <script src="./assets/js/games/nav.js"></script>
+    <script src="./assets/js/games/towerdefense.js"></script>
+</body>
+
+</html>

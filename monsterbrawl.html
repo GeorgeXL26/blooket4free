@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooket4Free | Monster Brawl</title>
+    <link rel="icon" type="image/x-icon" href="./assets/misc_images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700|Titan+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/games.css">
+    <style>
+        .arena {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 12px;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 22px 16px;
+            background: radial-gradient(circle at 50% 0%, #1e3a57, #0d1a29 70%);
+        }
+
+        .fighter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 240px;
+            position: relative;
+        }
+
+        .spriteWrap {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.08);
+        }
+
+        .spriteWrap img {
+            width: 128px;
+            height: 128px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45));
+            transition: transform 0.12s ease;
+        }
+
+        .spriteWrap .emojiArt {
+            font-size: 84px;
+        }
+
+        .fighter--monster .spriteWrap {
+            background: rgba(231, 76, 60, 0.08);
+            box-shadow: inset 0 0 0 3px rgba(231, 76, 60, 0.25);
+        }
+
+        .fighterName {
+            font-family: 'Titan One', cursive;
+            font-size: 17px;
+            line-height: 1.5;
+            text-shadow: 2px 2px var(--gray-shadow);
+            min-height: 24px;
+        }
+
+        .bar {
+            position: relative;
+            width: 100%;
+            height: 26px;
+            border-radius: 13px;
+            background: rgba(0, 0, 0, 0.45);
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .bar--slim {
+            height: 18px;
+            border-radius: 9px;
+        }
+
+        .barFill {
+            height: 100%;
+            width: 100%;
+            border-radius: inherit;
+            transition: width 0.35s ease;
+        }
+
+        .barFill--hp {
+            background: linear-gradient(180deg, #57e36b, #24a838);
+        }
+
+        .barFill--hp.low {
+            background: linear-gradient(180deg, #ff8b7a, #d6301c);
+        }
+
+        .barFill--enemy {
+            background: linear-gradient(180deg, #ff8b7a, #c0392b);
+        }
+
+        .barFill--rage {
+            background: linear-gradient(180deg, #c88bff, #8e44ad);
+        }
+
+        .barText {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-family: 'Titan One', cursive;
+            letter-spacing: 0.4px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .vs {
+            font-family: 'Titan One', cursive;
+            font-size: 30px;
+            color: var(--gold);
+            text-shadow: 3px 3px var(--gray-shadow);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.14);
+            }
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .actions .gb {
+            min-width: 150px;
+        }
+
+        .battleLog {
+            max-width: 640px;
+            margin: 18px auto 0;
+            min-height: 46px;
+            text-align: center;
+            font-size: 14.5px;
+            color: #e9f4ff;
+            text-shadow: 1px 1px rgba(0, 0, 0, 0.35);
+            line-height: 1.5;
+        }
+
+        .battleLog .crit {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .battleLog .bad {
+            color: #ff9c8f;
+            font-weight: 700;
+        }
+
+        .floatDmg {
+            position: absolute;
+            left: 50%;
+            top: 18px;
+            transform: translateX(-50%);
+            font-family: 'Titan One', cursive;
+            font-size: 26px;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000, 0 0 12px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+            animation: floatUp 0.75s ease-out forwards;
+            z-index: 5;
+        }
+
+        .floatDmg.crit {
+            color: var(--gold);
+            font-size: 34px;
+        }
+
+        .floatDmg.heal {
+            color: #6bf58a;
+        }
+
+        .floatDmg.hurt {
+            color: #ff7b68;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 14px) scale(0.7);
+            }
+
+            25% {
+                opacity: 1;
+                transform: translate(-50%, 0) scale(1.15);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -56px) scale(1);
+            }
+        }
+
+        .shake {
+            animation: shake 0.32s linear;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-9px) rotate(-3deg);
+            }
+
+            40% {
+                transform: translateX(8px) rotate(3deg);
+            }
+
+            60% {
+                transform: translateX(-6px) rotate(-2deg);
+            }
+
+            80% {
+                transform: translateX(4px);
+            }
+        }
+
+        .waveBanner {
+            position: fixed;
+            top: 22%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Titan One', cursive;
+            font-size: clamp(26px, 5vw, 44px);
+            color: var(--gold);
+            text-shadow: 4px 4px var(--gray-shadow);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1500;
+        }
+
+        .waveBanner.show {
+            animation: bannerIn 1.5s ease forwards;
+        }
+
+        @keyframes bannerIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 18px) scale(0.8);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate(-50%, 0) scale(1.05);
+            }
+
+            75% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -16px) scale(1);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .fighter {
+                width: 44%;
+            }
+
+            .spriteWrap {
+                width: 112px;
+                height: 112px;
+            }
+
+            .spriteWrap img {
+                width: 96px;
+                height: 96px;
+            }
+
+            .vs {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="sidebar" class="Sidebar_sidebar__J7H_G"></nav>
+    <div id="overlay"></div>
+    <button id="hamburgerBtn" class="hamburger">
+        <img src="./assets/misc_images/borgor.svg" alt="Menu">
+    </button>
+    <div id="coinBadge" class="coinBadge">🪙 <span id="coinAmount">0</span> Blook Coins</div>
+
+    <div class="waveBanner" id="waveBanner">Wave 1</div>
+
+    <main class="page">
+        <a class="backLink" href="./games.html">← All games</a>
+        <h1 class="title">Monster Brawl</h1>
+        <p class="subtitle">Knock out monsters, survive the waves, collect <b>Blook Coins</b>.</p>
+
+        <div class="hud">
+            <div class="hudItem">Wave <b id="hudWave">1</b></div>
+            <div class="hudItem">Monsters KO'd <b id="hudKills">0</b></div>
+            <div class="hudItem">Earned <b id="hudEarned">0</b> 🪙</div>
+        </div>
+
+        <div class="arena panel">
+            <div class="fighter fighter--you">
+                <div class="spriteWrap" id="playerSprite"></div>
+                <div class="fighterName">You</div>
+                <div class="bar">
+                    <div class="barFill barFill--hp" id="playerHpBar"></div>
+                    <span class="barText" id="playerHpText">100 / 100</span>
+                </div>
+                <div class="bar bar--slim">
+                    <div class="barFill barFill--rage" id="rageBar"></div>
+                    <span class="barText" id="rageText">Rage 0%</span>
+                </div>
+            </div>
+
+            <div class="vs">VS</div>
+
+            <div class="fighter fighter--monster">
+                <div class="spriteWrap" id="monsterSprite"></div>
+                <div class="fighterName" id="monsterName">—</div>
+                <div class="bar">
+                    <div class="barFill barFill--enemy" id="monsterHpBar"></div>
+                    <span class="barText" id="monsterHpText">0 / 0</span>
+                </div>
+                <div class="bar bar--slim" style="visibility:hidden"></div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="gb gb--red" data-action="attack">⚔️ Attack</button>
+            <button class="gb gb--gold" data-action="heavy">💥 Heavy Hit</button>
+            <button class="gb gb--green" data-action="heal">❤️ Heal <span id="healCount"></span></button>
+            <button class="gb gb--purple" data-action="rage" disabled>🔥 Rage Burst</button>
+        </div>
+
+        <div class="battleLog" id="log">A monster approaches…</div>
+        <p class="hint">Keybinds: <b>1</b> attack · <b>2</b> heavy · <b>3</b> heal · <b>4</b> rage burst</p>
+    </main>
+
+    <div class="overlayCard" id="overCard">
+        <div class="overlayBox">
+            <h2 id="overTitle">Knocked Out!</h2>
+            <p>Waves survived: <span class="earned" id="overWaves">0</span></p>
+            <p>Monsters KO'd: <span id="overKills">0</span></p>
+            <p>Blook Coins earned: <span class="earned" id="overCoins">0</span></p>
+            <div class="row">
+                <button class="gb gb--green" id="againBtn">Brawl Again</button>
+                <a class="gb gb--ghost" href="./games.html">All games</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/coins.js"></script>
+    <script src="./assets/js/games/sprites.js"></script>
+    <script src="./assets/js/games/nav.js"></script>
+    <script src="./assets/js/games/monsterbrawl.js"></script>
+</body>
+
+</html>
