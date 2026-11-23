@@ -17,7 +17,7 @@
     const TOTAL_WEIGHT = OUTCOMES.reduce((sum, o) => sum + o.w, 0);
 
     const state = {
-        round: 1,
+        round: 10,
         gold: 0,
         rival: START_RIVAL,
         shield: 0,
