@@ -5,10 +5,10 @@
         { id: "crocodile", name: "Crocodile", hp: 60, atk: [6, 10] },
         { id: "anaconda", name: "Anaconda", hp: 72, atk: [7, 11] },
         { id: "alien", name: "Alien", hp: 86, atk: [8, 13] },
-        { id: "blobfish", name: "Blobfish", hp: 68, atk: [9, 12] },
+        { id: "blobfish", name: "Blobfish", hp: 68, atk: [9, 12] }
     ];
 
-    const BOSS = { id: "brainybot", name: "Brainy Bot", hp: 130, atk: [11, 16] };
+    const BOSS = { id: "brainybot", name: "Brainy Bot", hp: 100, atk: [11, 16] };
 
     const PLAYER_MAX_HP = 100;
     const PLAYER_HEALS = 3;
