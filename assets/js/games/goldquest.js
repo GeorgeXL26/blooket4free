@@ -159,7 +159,6 @@
 
     function finish() {
         state.over = true;
-        state.rival = state.gold
         const won = state.gold > state.rival
         const draw = state.gold === state.rival;
         const coins = Math.floor(state.gold / 8) + (won ? 20 : 0);
