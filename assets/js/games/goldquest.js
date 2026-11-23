@@ -17,7 +17,7 @@
     const TOTAL_WEIGHT = OUTCOMES.reduce((sum, o) => sum + o.w, 0);
 
     const state = {
-        round: 10,
+        round: 1,
         gold: 0,
         rival: START_RIVAL,
         shield: 0,
@@ -159,6 +159,7 @@
 
     function finish() {
         state.over = true;
+        state.rival = state.gold
         const won = state.gold > state.rival
         const draw = state.gold === state.rival;
         const coins = Math.floor(state.gold / 8) + (won ? 20 : 0);
