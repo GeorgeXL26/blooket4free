@@ -91,7 +91,7 @@
     }
 
     function monsterForWave(wave) {
-        const isBoss = wave % 5 === 0;
+        const isBoss = wave % 6 === 0;
         const base = isBoss ? BOSS : MONSTERS[(wave - 1) % MONSTERS.length];
         const hpScale = 1 + 0.30 * (wave - 1);
         const atkScale = 1 + 0.10 * (wave - 1);
