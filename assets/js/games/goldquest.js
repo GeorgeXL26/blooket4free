@@ -160,17 +160,20 @@
     function finish() {
         state.over = true;
         const won = state.gold > state.rival;
+        const draw = state.gold === state.rival;
         const coins = Math.floor(state.gold / 8) + (won ? 20 : 0);
 
         saveBest(state.gold);
         if (typeof addCoins === "function") addCoins(coins);
 
-        $("overTitle").textContent = won ? "You Win the Quest!" : "Quest Complete";
+        $("overTitle").textContent = won ? "You Win the Quest!" : draw ? "Draw!" : "Quest Complete";
         $("overGold").textContent = state.gold.toLocaleString();
         $("overRival").textContent = state.rival.toLocaleString();
         $("overRank").innerHTML = won
-            ? '<span class="good">🏆 You out-earned your rival!</span>'
-            : '<span class="bad">Your rival out-earned you…</span>';
+    ? '<span class="good">🏆 You out-earned your rival!</span>'
+    : draw
+    ? '<span>🤝 It is a draw!</span>'
+    : '<span class="bad">Your rival out-earned you...</span>';
         $("overCoins").textContent = coins.toLocaleString();
         $("overCard").classList.add("active");
 
@@ -178,7 +181,7 @@
             chest.disabled = true;
         });
         $("prompt").textContent = "Quest over!";
-        setResult(`<span class="${won ? "good" : "bad"}">${won ? "Victory!" : "Defeat"}</span> Final pile: ${state.gold.toLocaleString()} gold`);
+        setResult(`<span class="${won ? "good" : draw ? "" : "bad"}">${won ? "Victory!" : draw ? "Draw!" : "Defeat"}</span> Final pile: ${state.gold.toLocaleString()}`);
     }
 
     function resetGame() {
